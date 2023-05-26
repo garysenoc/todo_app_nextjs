@@ -37,11 +37,7 @@ const TodoList = () => {
   const classes = useStyles();
   let inRef = null;
   const [idIndex, setIdIndex] = useState(3);
-  const [todoList, setTodoList] = useState([
-    { id: 0, checked: true, text: 'hello-world', anim: false },
-    { id: 1, checked: false, text: 'react + nextjs', anim: false },
-    { id: 2, checked: false, text: '@material-ui', anim: false },
-  ]);
+  const [todoList, setTodoList] = useState([]);
   const toggleItem = value => () => {
     const copy = [...todoList];
     copy.forEach(e => {
