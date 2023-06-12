@@ -1,14 +1,14 @@
-import Document, { Head, Main, NextScript } from 'next/document';
-import { ServerStyleSheet } from 'styled-components';
+import Document, { Head, Main, NextScript } from "next/document";
+import { ServerStyleSheet } from "styled-components";
 
-import { ServerStyleSheets } from '@material-ui/core/styles';
-import theme from '../theme';
+import { ServerStyleSheets } from "@material-ui/core/styles";
+import theme from "../theme";
 
 class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
     const sheet = new ServerStyleSheet();
-    const page = renderPage(App => props =>
-      sheet.collectStyles(<App {...props} />)
+    const page = renderPage(
+      (App) => (props) => sheet.collectStyles(<App {...props} />),
     );
     const styleTags = sheet.getStyleElement();
     return { ...page, styleTags };
@@ -18,11 +18,26 @@ class MyDocument extends Document {
     return (
       <html>
         <Head>
+          <meta
+            name='apple-mobile-web-app-status-bar-style'
+            content='black'
+          ></meta>
+          <meta
+            name='apple-mobile-web-app-capable'
+            content='yes'
+          ></meta>
+          <meta
+            name='apple-mobile-web-app-title'
+            content='AppTitle'
+          ></meta>
           <style>{`body { margin: 0 } /* custom! */`}</style>
-          <link rel="stylesheet" href="/static/css/nprogress.css" />
           <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel='stylesheet'
+            href='/static/css/nprogress.css'
+          />
+          <link
+            rel='stylesheet'
+            href='https://fonts.googleapis.com/icon?family=Material+Icons'
           />
           {this.props.styleTags}
         </Head>
@@ -35,14 +50,14 @@ class MyDocument extends Document {
   }
 }
 
-MyDocument.getInitialProps = async ctx => {
+MyDocument.getInitialProps = async (ctx) => {
   // Resolution order
   const sheets = new ServerStyleSheets();
   const originalRenderPage = ctx.renderPage;
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: App => props => sheets.collect(<App {...props} />),
+      enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
     });
 
   const initialProps = await Document.getInitialProps(ctx);
@@ -58,3 +73,4 @@ MyDocument.getInitialProps = async ctx => {
 };
 
 export default MyDocument;
+
